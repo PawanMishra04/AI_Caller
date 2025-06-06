@@ -17,36 +17,35 @@ const CallLog = () => {
   const [loading, setloading] = useState(false);
   const [load, setLoad] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [profileData, setProfileData] = useState({});
   const [showProfile, setShowProfile] = useState(false);
 
   const ProfileRef = (null);
   const profileToggleRef = (null);
 
   /** ✅ Function to get user profile */
-  const getMyProfile = async () => {
-    try {
-      const response = await axios.get("/api/get_my_profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      // console.log(response.data.data);
-      setProfileData(response.data.data);
-    } catch (e) {
-      Swal.fire({
-        title: e.response?.data?.message || "Error fetching profile",
-        icon: "error",
-      });
-    }
-  };
+  // const getMyProfile = async () => {
+  //   try {
+  //     const response = await axios.get("/api/get_my_profile", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     // console.log(response.data.data);
+  //     setProfileData(response.data.data);
+  //   } catch (e) {
+  //     Swal.fire({
+  //       title: e.response?.data?.message || "Error fetching profile",
+  //       icon: "error",
+  //     });
+  //   }
+  // };
 
   const token = localStorage.getItem("token");
 
-  const payloadBase64 = token.split(".")[1];
-  const payloadDecoded = JSON.parse(atob(payloadBase64));
-  const user_id = payloadDecoded.user_id;
+  // const payloadBase64 = token.split(".")[1];
+  // const payloadDecoded = JSON.parse(atob(payloadBase64));
+  // const user_id = payloadDecoded.user_id;
 
   const handleShowDetails = (execution) => {
     setSelectedExecution(execution);
@@ -114,7 +113,6 @@ const CallLog = () => {
 
   useEffect(() => {
     agentDashboard();
-    getMyProfile();
   }, []);
 
   const formatDuration = (seconds) => {
@@ -204,16 +202,16 @@ const CallLog = () => {
   return (
     <div
       className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-        } p-4 md:p-6 lg:p-9 h-screen md:ml-64`}
+        } p-4 md:p-6 lg:p-9  md:ml-48`}
     >
       <div className="flex flex-col md:flex-row justify-between">
         {/* Show logo on mobile and text on larger screens */}
         <div className="flex items-center">
-          <img
+          {/* <img
             src="./images/MAITRIAILOGO4.png" 
             alt="Company Logo"
             className="w-40 sm:hidden -mt-1 ml-10"
-          />
+          /> */}
           {/* Dashboard text - hidden on mobile */}
           <div className="hidden sm:block font-bold text-2xl md:text-3xl">
             Dashboard Overview
@@ -234,7 +232,7 @@ const CallLog = () => {
                 <img src="./images/Light mode.png" alt="" className="" />
               </>
             ) : (
-              <>
+              <> 
                 <h2 className="hidden sm:inline">Night mode</h2>
                 <img src="./images/material-symbols-light_dark-mode-rounded.png" alt="" className="" />
               </>
@@ -243,7 +241,7 @@ const CallLog = () => {
 
           <div
             ref={profileToggleRef}
-            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-pink-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
+            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
             onClick={handleCancel}
           >
             {/* {profileData?.username?.slice(0, 1)} */}
@@ -259,19 +257,19 @@ const CallLog = () => {
         <div ref={ProfileRef}><ProfileSettings handleCancel={() => setShowProfile(false)} /></div>
       )}
 
-      <div
+      {/* <div
         className={`${isNightMode ? "bg-black text-white" : "bg-white text-gray-700"
           } flex justify-between items-center rounded-lg shadow-sm p-4 text-2xl font-bold mt-10`}
       >
         Call Logs
         <button
           onClick={() => setShowForm(true)}
-          className="flex text-lg text-white bg-customPink rounded-md p-2 mr-4 font-medium"
+          className="flex text-lg text-white bg-orange-500 rounded-md p-2 mr-4 font-medium"
         >
           <img src="./images/i.png" alt="" className="mr-2 ml-2 mt-1" />
           Call Numbers
         </button>
-      </div>
+      </div> */}
 
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[50]">
@@ -317,9 +315,9 @@ const CallLog = () => {
 
                 <button
                   type="submit"
-                  className={`bg-customPink text-white px-20 py-3 rounded-lg ${loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : " hover:bg-customDarkPink"
+                  className={`bg-orange-500 text-white px-20 py-3 rounded-lg ${loading
+                    ? "bg-orange-500 cursor-not-allowed"
+                    : " hover:bg-orange-500"
                     }`}
                   onClick={handleCall}
                   disabled={loading}
@@ -361,21 +359,30 @@ const CallLog = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          
         </div>
-        {/* <div
+        
+        <div
           className={`${
             isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
           } flex p-2 gap-5 items-center text-lg font-medium`}
         >
-          <button className="flex border p-2 pr-4 rounded-lg">
+          {/* <button className="flex border p-2 pr-4 rounded-lg">
             <img src="./svg.webp" alt="" className="p-2" />
             Filter
           </button>
           <button className="flex border p-2 pr-4 rounded-lg">
             <img src="./svg (1).webp" alt="" className="p-2" />
             Export
-          </button>
-        </div> */}
+          </button> */}
+           <button
+          onClick={() => setShowForm(true)}
+          className="flex text-lg text-white bg-orange-500 rounded-md p-2 mr-4 font-medium"
+        >
+          <img src="./images/i.png" alt="" className="mr-2 ml-2 mt-1" />
+          Call Numbers
+        </button>
+        </div>
       </div>
 
       <div className="mt-6 rounded-lg w-full border">
@@ -435,12 +442,12 @@ const CallLog = () => {
                     </td>
                     <td className="p-4">
                       <span
-                        className={`px-2 py-1 rounded-md text-xs font-medium ${cta.color}`}
+                        className={`px-2 py-1 rounded-md text-xs font-medium whitespace-nowrap ${cta.color}`}
                       >
                         {cta.text}
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 whitespace-nowrap">
                       {new Date(execution.created_at).toLocaleString()}
                     </td>
                   </tr>

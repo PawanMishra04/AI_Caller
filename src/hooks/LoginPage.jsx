@@ -71,15 +71,16 @@ const LoginPage = () => {
     <div className="flex flex-col md:flex-row h-screen md:p-16 p-4 gap-6">
       <div className="md:w-[50%] w-full flex justify-center items-center">
         <img
-          className="md:h-[90%] h-auto max-h-64 sm:max-h-96 md:max-h-[600px]"
+          className="md:h-[90%] h-auto max-h-64 sm:max-h-96 md:max-h-[600px] h-56"
           src="./images/SignIn.png"
           alt="Login"
+          loading="eager"
         />
       </div>
       
       <div className="shadow-lg flex-1 rounded-xl px-6 py-4 md:px-10">
         <div className="">
-          <img className="m-auto w-36 md:w-40" src="./images/logo.png" alt="Logo" />
+          <img className="m-auto w-36 md:w-40" src="./images/LogoTagline.png" alt="Logo" />
         </div>
         <div className="flex flex-col items-center gap-2 mt-4">
           <h1 className="text-3xl md:text-4xl font-semibold">Sign In</h1>
@@ -117,15 +118,17 @@ const LoginPage = () => {
             className="absolute inset-y-0 top-7 right-2 flex items-center"
             >
             {showPassword ? (
-                  <PiEyeSlash className="h-5 w-5 text-gray-500" />
+                                <PiEyeLight  className="h-5 w-5 text-gray-500" />
+
                 ) : (
-                  <PiEyeLight  className="h-5 w-5 text-gray-500" />
+                                    <PiEyeSlash className="h-5 w-5 text-gray-500" />
+
                 )}
             </button>
           </div>
           <button
             type="submit"
-            className="bg-pink-600 text-center py-3 rounded-xl mt-4 text-white font-semibold"
+            className="bg-orange-500 text-center py-3 rounded-xl mt-4 text-white font-semibold hover:bg-orange-700"
           >
             Sign in
           </button>

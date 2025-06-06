@@ -6,9 +6,10 @@ import { MdDelete } from "react-icons/md";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Loader from "../components/Loader";
+import ProfileSettings from "./Profile";
 const Campaigns = () => {
   const [showForm, setShowForm] = useState(false);
-  const { isNightMode } = useNightMode();
+  // const { isNightMode } = useNightMode();
   const [fileData, setFileData] = useState(null);
   const [BatchData, setBatchData] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -18,6 +19,7 @@ const Campaigns = () => {
   const [batchId, setBatchId] = useState("");
   const token = localStorage.getItem("token");
   const [load, setLoad] = useState(true);
+  const { isNightMode, toggleNightMode } = useNightMode();
 
   const DeleteBatch = async (id) => {
 
@@ -169,27 +171,50 @@ const Campaigns = () => {
   useEffect(() => {
     getBatch();
   }, []);
+  const ProfileRef = (null);
+  const profileToggleRef = (null);
+    const [showProfile, setShowProfile] = useState(false);
 
+  const handleCancel = () => {
+    setShowProfile(!showProfile); // Toggle profile visibility
+  };
   return (
     <div
       className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-        } p-4 md:p-6 lg:p-9 h-screen md:ml-64`}
+        } p-4 md:p-6 lg:p-9 h-screen md:ml-48`}
     >
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col  md:flex-row justify-end">
         {/* Show logo on mobile and text on larger screens */}
-        <div className="flex items-center">
-          <img
-            src="./images/MAITRIAILOGO4.png" 
-            alt="Company Logo"
-            className="w-40 sm:hidden -mt-1 ml-10" 
-          />
-          {/* Dashboard text - hidden on mobile */}
-          <div className="hidden sm:block font-bold text-2xl md:text-3xl">
-            Dashboard Overview
-            <p className="text-lg md:text-xl font-semibold text-gray-400">
-              Monitor your AI calling performance
-            </p>
+       
+        <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0 space-y-4 md:space-y-0 md:space-x-4">
+          <button
+            className="flex items-center bg-gray-100 rounded-full sm:rounded-md p-2 text-lg font-semibold text-gray-600 absolute sm:static top-4 right-14 gap-2"
+            onClick={toggleNightMode}
+          >
+            {isNightMode ? (
+              <>
+                <h2 className="hidden sm:inline"> Light mode{" "}</h2>
+                <img src="./images/Light mode.png" alt="" className="" />
+              </>
+            ) : (
+              <> 
+                <h2 className="hidden sm:inline">Night mode</h2>
+                <img src="./images/material-symbols-light_dark-mode-rounded.png" alt="" className="" />
+              </>
+            )}
+          </button>
+
+          <div
+            ref={profileToggleRef}
+            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
+            onClick={handleCancel}
+          >
+            {/* {profileData?.username?.slice(0, 1)} */}
+            <svg xmlns="http://www.w3.org/2000/svg" width={512} height={512} viewBox="0 0 512 512"><path fill="white" fillRule="evenodd" d="M256 42.667A213.333 213.333 0 0 1 469.334 256c0 117.821-95.513 213.334-213.334 213.334c-117.82 0-213.333-95.513-213.333-213.334C42.667 138.18 138.18 42.667 256 42.667m21.334 234.667h-42.667c-52.815 0-98.158 31.987-117.715 77.648c30.944 43.391 81.692 71.685 139.048 71.685s108.104-28.294 139.049-71.688c-19.557-45.658-64.9-77.645-117.715-77.645M256 106.667c-35.346 0-64 28.654-64 64s28.654 64 64 64s64-28.654 64-64s-28.653-64-64-64"></path></svg>
+
           </div>
+
+          {/* <img src="./images/Rectangle.webp" alt="" className="w-10 h-10 cursor-pointer" onClick={handleCancel} /> */}
         </div>
       </div>
 
@@ -200,7 +225,7 @@ const Campaigns = () => {
         <h1 className="text-3xl flex items-center font-bold">Campaigns</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="border flex text-white text-lg bg-customPink hover:bg-customDarkPink rounded-lg px-5 p-3 items-center gap-2"
+          className="border flex text-white text-lg bg-orange-500 hover:bg-orange-700 rounded-lg px-5 p-3 items-center gap-2"
         >
           New Campaign
         </button>
@@ -239,7 +264,7 @@ const Campaigns = () => {
               </button>
               <button
                 type="submit"
-                className="bg-customPink text-white px-5 py-2 rounded-lg hover:bg-customDarkPink transition"
+                className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition"
                 onClick={BatchCreate}
               >
                 Create Campaign
@@ -255,6 +280,9 @@ const Campaigns = () => {
         <div className="fixed inset-0 right-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-30">
           <Loader />
         </div>
+      )}
+       {showProfile && (
+        <div ref={ProfileRef}><ProfileSettings handleCancel={() => setShowProfile(false)} /></div>
       )}
       {showCalendar && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-70 z-[1000]">

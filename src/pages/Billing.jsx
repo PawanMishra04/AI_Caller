@@ -93,16 +93,16 @@ const Billing = () => {
   return (
     <div
       className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-        } p-4 md:p-6 lg:p-9 md:ml-64 `}
+        } p-4 md:p-6 lg:p-9 md:ml-48 `}
     >
       <div className="flex flex-col md:flex-row justify-between">
         {/* Show logo on mobile and text on larger screens */}
         <div className="flex items-center">
-          <img
+          {/* <img
             src="./images/MAITRIAILOGO4.png"
             alt="Company Logo"
             className="w-40 sm:hidden -mt-1 ml-10"
-          />
+          /> */}
           {/* Dashboard text - hidden on mobile */}
           <div className="hidden sm:block font-bold text-2xl md:text-3xl">
             Dashboard Overview
@@ -132,7 +132,7 @@ const Billing = () => {
 
           <div
             ref={profileToggleRef}
-            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-pink-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
+            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
             onClick={handleCancel}
           >
             {/* {profileData?.username?.slice(0, 1)} */}
@@ -151,7 +151,7 @@ const Billing = () => {
       >
 
         <button
-          className={`sm:p-3 p-2 ml-5 rounded-lg text-lg ${activeButton === "billing" ? "bg-customPink text-white" : ""
+          className={`sm:p-3 p-2 ml-5 rounded-lg text-lg ${activeButton === "billing" ? "bg-orange-500 text-white" : ""
             }`}
           onClick={() => setActiveButton("billing")}
         >
@@ -159,7 +159,7 @@ const Billing = () => {
         </button>
 
         <button
-          className={`sm:p-3 p-2  rounded-lg text-lg ${activeButton === "voice" ? "bg-customPink text-white" : ""
+          className={`sm:p-3 p-2  rounded-lg text-lg ${activeButton === "voice" ? "bg-orange-500 text-white" : ""
             }`}
           onClick={() => setActiveButton("voice")}
         >
@@ -184,7 +184,7 @@ const Billing = () => {
                     setShowForm(true);
                     document.body.style.overflow = "hidden";
                   }}
-                  className="items-center justify-center border rounded-lg bg-customPink p-3 text-white"
+                  className="items-center justify-center border rounded-lg bg-orange-500 p-3 text-white"
                 >
                   Add Funds
                 </button>
@@ -249,7 +249,7 @@ const Billing = () => {
 
                           <button
                             type="submit"
-                            className="bg-customPink text-white px-5 py-2 rounded-lg hover:bg-customDarkPink transition"
+                            className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition"
                             onClick={handleClick}
                           >
                             Add to my Balance
@@ -294,7 +294,7 @@ const Billing = () => {
             <p className=" font-medium mb-4">Minute Usage</p>
             <div className="w-full h-3 bg-gray-200 rounded-full">
               <div
-                className="absolute top-0 left-0 h-3 bg-pink-500 rounded-full"
+                className="absolute top-0 left-0 h-3 bg-orange-500 rounded-full"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
@@ -387,7 +387,7 @@ const Billing = () => {
                       localStorage.setItem("rechargePrice", plan.price)
                     }
                   >
-                    <button className="mt-6 w-full bg-customPink text-white font-medium py-2 rounded-lg hover:bg-customDarkPink">
+                    <button className="mt-6 w-full bg-orange-500 text-white font-medium py-2 rounded-lg hover:bg-orange-700">
                       {plan.is_recommended ? "Get Recommended" : "Get Started"}
                     </button>
                   </Link>
@@ -419,7 +419,7 @@ const Billing = () => {
                     Social media configuration
                   </li>
                 </ul>
-                <button className="mt-6 w-full bg-customPink text-white font-medium py-2 rounded-lg hover:bg-customDarkPink">
+                <button className="mt-6 w-full bg-orange-500 text-white font-medium py-2 rounded-lg hover:bg-orange-700">
                   Let’s Talk
                 </button>
               </div>
@@ -475,7 +475,7 @@ const Billing = () => {
               <h2 className="text-xl mt-2 ">
                 Start making calls to see your usage statistics
               </h2>
-              <button className="border flex text-white text-lg bg-customPink  hover:bg-customDarkPink rounded-lg px-5 p-3 items-center gap-2 mt-6">
+              <button className="border flex text-white text-lg bg-orange-500  hover:bg-customDarkPink rounded-lg px-5 p-3 items-center gap-2 mt-6">
                 <img src="./images/svg.png" alt="" />
                 Make Your First Call
               </button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,10 +7,7 @@ import {
 } from "react-router-dom";
 import { LoginProvider, useLogin } from "./contexts/AuthContext";
 import Sidebar from "./components/Sidebar";
-import Dashboard from "./pages/Dashboard";
-import CallLog from "./pages/CallLog";
-import Billing from "./pages/Billing";
-import Campaigns from "./pages/Campaigns";
+
 import Tasks from "./pages/Tasks";
 import RechargePage from "./components/RechargePage";
 import Signup from "./components/Signup";
@@ -18,15 +15,16 @@ import { NightModeProvider } from "./contexts/NightModeContext";
 import LoginPage from "./hooks/LoginPage";
 import PrivateRoute from "./hooks/PrivateRoute";
 
-
+const Dashboard=React.lazy(()=>import("./pages/Dashboard"));
+const CallLog=React.lazy(()=>import('./pages/CallLog'));
+const Billing=React.lazy(()=>import('./pages/Billing'));
+const Campaigns=React.lazy(()=>import('./pages/Campaigns'));
 function Content({ showSidebar }) {
   const { user } = useLogin();
   return (
     <div className="flex">
       {showSidebar && <Sidebar />}
-      {/* <LanguageSwitcher /> */}
-      {/* <i18n/> */}
-
+   
       <div className="w-full">
         <Routes>
           <Route path="/signup" element={<Signup />} />

@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { useNightMode } from "../contexts/NightModeContext";
 import { useLogin } from "../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
 import { FiMenu, FiX } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { PiPhoneCallFill } from "react-icons/pi";
+import { RiBillFill } from "react-icons/ri";
+import { FaBullhorn } from "react-icons/fa";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -23,28 +26,34 @@ const Sidebar = () => {
     {
       name: "Dashboard",
       path: "/dashboard",
-      icon: "./images/Dashboard.png",
+      icon: <LuLayoutDashboard />,
       // icon: "",
       // activeIcon: "./images/dashboadicon.webp",
-      activeIcon: "./images/activeDahboard.png",
+      activeIcon: <LuLayoutDashboard />,
     },
     {
       name: "Call Logs",
       path: "/call-logs",
-      icon: "./images/callLogs.png",
-      activeIcon: "./images/ActiveCallLog.png",
+      icon: <PiPhoneCallFill />
+,
+      activeIcon: <PiPhoneCallFill />
+,
     },
     {
       name: "Billing & Usage",
       path: "/billing",
-      icon: "./images/Billing & Usage.png",
-      activeIcon: "./images/Billing & Usage (1).png",
+      icon: <RiBillFill />
+,
+      activeIcon: <RiBillFill />
+,
     },
     {
       name: "Campaigns",
       path: "/campaigns",
-      icon: "./images/Campaigns icon.png",
-      activeIcon: "./images/Campaigns icon (1).png",
+      icon: <FaBullhorn />
+,
+      activeIcon: <FaBullhorn />
+,
     },
   ];
   useEffect(() => {
@@ -63,13 +72,13 @@ const Sidebar = () => {
 
       <div
         className={`fixed top-0 left-0 h-screen w-full shadow-xl  transition-transform duration-300 z-40  ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 md:fixed md:left-0 md:top-0 md:h-screen md:w-80 ${isNightMode ? "bg-gray-950 text-white" : "bg-white text-gray-700"
-          } flex flex-col `}
+          } md:translate-x-0 md:fixed md:left-0 md:top-0 md:h-screen md:w-64 ${isNightMode ? "bg-gray-950 text-white" : "bg-white text-gray-700"
+          } flex flex-col`}
       >
         {/* Logo Section */}
         <div className="border-b-2 p-5 ">
           <div className="flex p-4 justify-center items-center">
-            <img src="./images/MAITRIAILOGO4.png" alt="logo" className="" />
+            <img src="./images/LogoTagline.png" alt="logo" className="h-24 w-24" />
           </div>
         </div>
 
@@ -90,18 +99,16 @@ const Sidebar = () => {
               }}
               className={`flex items-center mb-7 gap-3 px-4 py-3 w-[100%] rounded-lg transition-all duration-300
                             ${active === item.path
-                  ? "bg-blue-100 text-pink-500"
-                  : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-pink-500 after:transition-all after:duration-300 hover:after:w-full"
+                  ? "bg-blue-100 text-orange-500"
+                  : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-orange-500 after:transition-all after:duration-300 hover:after:w-full"
                 }
                         `}
             >
               {/* Icon changes when active */}
-              <img
-                src={active === item.path ? item.activeIcon : item.icon}
-                alt="icon"
-                className="mt-2 h-5 w-5"
-              />
-              {item.name}
+                <span className="h-auto w-auto flex justify-center pt-1">
+                {active === item.path ? item.activeIcon : item.icon}
+              </span>
+              <span className="text-sm">{item.name}</span>
             </Link>
           ))}
         </div>
