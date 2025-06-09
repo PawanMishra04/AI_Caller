@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState,  useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNightMode } from "../contexts/NightModeContext";
 import { useLogin } from "../contexts/AuthContext";
@@ -99,8 +99,8 @@ const Sidebar = () => {
               }}
               className={`flex items-center mb-7 gap-3 px-4 py-3 w-[100%] rounded-lg transition-all duration-300
                             ${active === item.path
-                  ? "bg-blue-100 text-orange-500"
-                  : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-orange-500 after:transition-all after:duration-300 hover:after:w-full"
+                  ? "bg-blue-100  text-[#BD695D] "
+                  : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-[#BD695D] after:transition-all after:duration-300 hover:after:w-full"
                 }
                         `}
             >

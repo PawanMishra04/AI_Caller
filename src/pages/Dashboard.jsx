@@ -4,6 +4,7 @@ import { useNightMode } from "../contexts/NightModeContext";
 import axios from "../helper/axios";
 import Loader from "../components/Loader";
 import ProfileSettings from "./Profile";
+import Topbar from "./Topbar";
 
 const Dashboard = () => {
   const [dashboard, setDashboard] = useState([]);
@@ -82,16 +83,13 @@ const Dashboard = () => {
     const remainingSeconds = seconds % 60;
     return `${minutes}m ${remainingSeconds}s`;
   };
-
+    const [text,setText]=useState('Dashboard Overview')
+    const [desc,setDesc]=useState('Monitor your AI calling performance');
   return (
     <div className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"} p-3 md:p-6 sm:mr-0 lg:p-9 md:ml-48`}>
-      <div className="flex flex-col md:flex-row justify-between mt-5 md:mt-0">
+      {/* <div className="flex flex-col md:flex-row justify-between mt-5 md:mt-0">
         <div className="flex items-center">
-          {/* <img
-            src="./images/MAITRIAILOGO4.png"
-            alt="Company Logo"
-            className="w-40 sm:hidden -mt-0 ml-10"
-          /> */}
+      
           <div className="hidden sm:block font-bold text-2xl md:text-3xl">
             Dashboard Overview
             <p className="text-lg md:text-xl font-semibold text-gray-400">
@@ -125,7 +123,7 @@ const Dashboard = () => {
 
           <div
             ref={profileToggleRef}
-            className="w-9 h-9 sm:w-12 sm:h-12 mr-10 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-8"
+            className="w-9 h-9 sm:w-12 sm:h-12 mr-10 bg-[#BD695D] rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-8"
             onClick={handleCancel}
           >
             <svg
@@ -142,7 +140,8 @@ const Dashboard = () => {
             </svg>
           </div>
         </div>
-      </div>
+      </div> */}
+      <Topbar text={text}desc={desc}></Topbar>
 
       {showProfile && (
         <div ref={profileRef}>
@@ -152,7 +151,7 @@ const Dashboard = () => {
 
       <div className={`${isNightMode ? "bg-black text-white" : "bg-white text-gray-700"} shadow-sm rounded-md mt-6 text-lg p-4 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4`}>
         <div className="flex items-center justify-end w-full mt-4 md:mt-0">
-          <h2 className="text-orange-500 bg-white p-2 rounded-lg font-medium">
+          <h2 className="text-[#BD695D] bg-white p-2 rounded-lg font-medium">
             Available Balance : {balance}
           </h2>
           <Link to="/recharge">
@@ -173,12 +172,12 @@ const Dashboard = () => {
         <DashboardCard isNightMode={isNightMode} title="Avg. Call Duration" value={`${dashboard.total_duration_minutes} Min`} image="./images/div (2).png" />
         <DashboardCard isNightMode={isNightMode} title="Total Cost" value={dashboard.total_call_cost_with_extra_charge} image="./images/div (3).png" />
       </div>
-       <div className={`${isNightMode ? "bg-gray-600 text-white" : "bg-white text-gray-700"} border rounded-lg flex items-center w-[] md:w-auto mt-8`}>
+       <div className={`${isNightMode ? "bg-gray-600 text-white" : "bg-white text-gray-700"} border rounded-lg flex items-center  md:w-[40%] mt-8`}>
             <img src="./images/Frame.png" alt="" className="w-5 h-5 ml-3" />
             <input
               type="text"
-              placeholder="Search..."
-              className="ml-4 p-2 mr-16 outline-none bg-transparent w-full md:w-48"
+              placeholder="Search by ID, Name, Status, or Number..."
+              className="ml-4 p-2 mr-16 outline-none bg-transparent w-full "
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

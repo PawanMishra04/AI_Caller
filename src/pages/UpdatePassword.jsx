@@ -118,7 +118,7 @@ const UpdatePassword = ({ handleCancel }) => {
           {/* Submit */}
           <button
             type="submit"
-            className={`w-full py-2 px-4 rounded-lg transition duration-200 ${isNightMode ? "bg-blue-600 hover:bg-blue-500" : "bg-orange-500 hover:bg-orange-600"} text-white`}
+            className={`w-full py-2 px-4 rounded-lg transition duration-200 ${isNightMode ? "bg-blue-600 hover:bg-blue-500" : "bg-[#BD695D] hover:bg-[#A13727]"} text-white`}
           >
             Save
           </button>

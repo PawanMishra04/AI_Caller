@@ -72,7 +72,7 @@ const ProfileSettings = ({ handleCancel }) => {
           <div className="space-y-4">
             {/* Admin Profile Section */}
             <div className="flex items-center space-x-4">
-              <div className="w-14 h-14 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-14 h-14 bg-[#BD695D] rounded-full flex items-center justify-center text-white text-2xl font-bold">
                 {profileData?.username?.slice(0, 1)}
               </div>
               <div>
@@ -100,8 +100,8 @@ const ProfileSettings = ({ handleCancel }) => {
               onClick={() => setShowUpdate(true)} // Open UpdatePassword modal
               className={`w-full py-2 px-4 m-2 rounded-lg transition duration-200 ${
                 isNightMode
-                  ? "bg-blue-600 hover:bg-blue-500"
-                  : "bg-orange-500 hover:bg-blue-600"
+                  ? "bg-[#BD695D] hover:bg-[#A13727]"
+                  : "bg-[#BD695D] hover:bg-[#A13727]"
               } text-white`}
             >
               Update Password

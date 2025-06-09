@@ -71,10 +71,9 @@ const LoginPage = () => {
     <div className="flex flex-col md:flex-row h-screen md:p-16 p-4 gap-6">
       <div className="md:w-[50%] w-full flex justify-center items-center">
         <img
-          className="md:h-[90%] h-auto max-h-64 sm:max-h-96 md:max-h-[600px] h-56"
+          className="md:h-[90%] h-auto max-h-64 sm:max-h-96 md:max-h-[600px]"
           src="./images/SignIn.png"
           alt="Login"
-          loading="eager"
         />
       </div>
       
@@ -128,7 +127,7 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="bg-orange-500 text-center py-3 rounded-xl mt-4 text-white font-semibold hover:bg-orange-700"
+            className="bg-[#BD695D] hover:bg-[#A13727] text-center py-3 rounded-xl mt-4 text-white font-semibold"
           >
             Sign in
           </button>

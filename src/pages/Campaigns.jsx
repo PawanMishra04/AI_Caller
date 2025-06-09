@@ -7,6 +7,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Loader from "../components/Loader";
 import ProfileSettings from "./Profile";
+import Topbar from "./Topbar";
 const Campaigns = () => {
   const [showForm, setShowForm] = useState(false);
   // const { isNightMode } = useNightMode();
@@ -178,58 +179,28 @@ const Campaigns = () => {
   const handleCancel = () => {
     setShowProfile(!showProfile); // Toggle profile visibility
   };
+    const [text,setText]=useState('Campaigns')
+
   return (
     <div
       className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
         } p-4 md:p-6 lg:p-9 h-screen md:ml-48`}
     >
-      <div className="flex flex-col  md:flex-row justify-end">
-        {/* Show logo on mobile and text on larger screens */}
-       
-        <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0 space-y-4 md:space-y-0 md:space-x-4">
-          <button
-            className="flex items-center bg-gray-100 rounded-full sm:rounded-md p-2 text-lg font-semibold text-gray-600 absolute sm:static top-4 right-14 gap-2"
-            onClick={toggleNightMode}
-          >
-            {isNightMode ? (
-              <>
-                <h2 className="hidden sm:inline"> Light mode{" "}</h2>
-                <img src="./images/Light mode.png" alt="" className="" />
-              </>
-            ) : (
-              <> 
-                <h2 className="hidden sm:inline">Night mode</h2>
-                <img src="./images/material-symbols-light_dark-mode-rounded.png" alt="" className="" />
-              </>
-            )}
-          </button>
-
-          <div
-            ref={profileToggleRef}
-            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
-            onClick={handleCancel}
-          >
-            {/* {profileData?.username?.slice(0, 1)} */}
-            <svg xmlns="http://www.w3.org/2000/svg" width={512} height={512} viewBox="0 0 512 512"><path fill="white" fillRule="evenodd" d="M256 42.667A213.333 213.333 0 0 1 469.334 256c0 117.821-95.513 213.334-213.334 213.334c-117.82 0-213.333-95.513-213.333-213.334C42.667 138.18 138.18 42.667 256 42.667m21.334 234.667h-42.667c-52.815 0-98.158 31.987-117.715 77.648c30.944 43.391 81.692 71.685 139.048 71.685s108.104-28.294 139.049-71.688c-19.557-45.658-64.9-77.645-117.715-77.645M256 106.667c-35.346 0-64 28.654-64 64s28.654 64 64 64s64-28.654 64-64s-28.653-64-64-64"></path></svg>
-
-          </div>
-
-          {/* <img src="./images/Rectangle.webp" alt="" className="w-10 h-10 cursor-pointer" onClick={handleCancel} /> */}
-        </div>
-      </div>
+<Topbar text={text}></Topbar>
 
       <div
-        className={`${isNightMode ? "bg-black text-white" : "bg-white text-gray-700"
-          } flex justify-between shadow p-4 mt-10 rounded-lg `}
+        className={`${isNightMode ? "bg-black text-white" : " bg-transparent"
+          } flex justify-start  p-4 mt-10 rounded-lg `}
       >
-        <h1 className="text-3xl flex items-center font-bold">Campaigns</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="border flex text-white text-lg bg-orange-500 hover:bg-orange-700 rounded-lg px-5 p-3 items-center gap-2"
+          className="border flex text-white text-lg bg-[#BD695D]  hover:bg-[#A13727] rounded-lg px-5 p-3 items-center gap-2"
         >
           New Campaign
         </button>
       </div>
+
+      
 
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[9999]">
@@ -264,7 +235,7 @@ const Campaigns = () => {
               </button>
               <button
                 type="submit"
-                className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition"
+                className="bg-[#BD695D] text-white px-5 py-2 rounded-lg hover:bg-[#A13727] transition"
                 onClick={BatchCreate}
               >
                 Create Campaign
