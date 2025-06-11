@@ -8,7 +8,9 @@ import ProfileSettings from "./Profile";
 import { FaDownload } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import Topbar from "./Topbar";
-
+import Pagination from '@mui/material/Pagination';
+// npm install @mui/material
+//npm install @emotion/react @emotion/styled
 const CallLog = () => {
   const [showForm, setShowForm] = useState(false);
   const { isNightMode, toggleNightMode } = useNightMode();
@@ -20,34 +22,12 @@ const CallLog = () => {
   const [load, setLoad] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showProfile, setShowProfile] = useState(false);
-
+  const [page, setPage] = useState(1);
+  const [text, setText] = useState('Call Log');
+  
   const ProfileRef = null;
-  const profileToggleRef = null;
-
-  /** ✅ Function to get user profile */
-  // const getMyProfile = async () => {
-  //   try {
-  //     const response = await axios.get("/api/get_my_profile", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     // console.log(response.data.data);
-  //     setProfileData(response.data.data);
-  //   } catch (e) {
-  //     Swal.fire({
-  //       title: e.response?.data?.message || "Error fetching profile",
-  //       icon: "error",
-  //     });
-  //   }
-  // };
-
+  // const profileToggleRef = null;
   const token = localStorage.getItem("token");
-
-  // const payloadBase64 = token.split(".")[1];
-  // const payloadDecoded = JSON.parse(atob(payloadBase64));
-  // const user_id = payloadDecoded.user_id;
 
   const handleShowDetails = (execution) => {
     setSelectedExecution(execution);
@@ -63,7 +43,6 @@ const CallLog = () => {
         },
       });
       setDashboard(response.data);
-      // console.log(response.data);
       setLoad(false);
     } catch (e) {
       console.error(
@@ -135,6 +114,7 @@ const CallLog = () => {
         return "bg-gray-100 text-gray-700";
     }
   };
+
   const getCTA = useCallback((execution) => {
     const { status, transcript, summary } = execution;
     if (status === "completed" && transcript) {
@@ -179,12 +159,11 @@ const CallLog = () => {
     return "Unknown";
   }, []);
 
-  // **Search Filter Implementation**
   const filteredExecutions = useMemo(() => {
     return dashboard?.executions
       ? dashboard.executions.filter((execution) => {
           const id = execution.id.toLowerCase();
-          const name = getName(execution).toLowerCase(); // Ensure getName is stable or included in deps if it changes
+          const name = getName(execution).toLowerCase();
           const status = execution.status.toLowerCase();
           const phoneNumber = execution.telephony_data?.to_number || "";
 
@@ -197,13 +176,20 @@ const CallLog = () => {
         })
       : [];
   }, [dashboard, searchQuery, getName]);
+  const itemsPerPage = 25;
 
-  const handleCancel = () => {
-    setShowProfile(!showProfile); // Toggle profile visibility
-  };
+  const paginatedExecutions = useMemo(() => {
+    const startIndex = (page - 1) * itemsPerPage;
+    return filteredExecutions.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredExecutions, page]);
+
+  const pageCount = Math.ceil(filteredExecutions.length / itemsPerPage);
+
+  // const handleCancel = () => {
+  //   setShowProfile(!showProfile);
+  // };
 
   const exportToExcel = useCallback(() => {
-    // Prepare data for export
     const data = filteredExecutions.map((execution) => {
       const cta = getCTA(execution);
       const costItem = dashboard.extra_charge_breakdown?.find(
@@ -226,91 +212,26 @@ const CallLog = () => {
       };
     });
 
-    // Create worksheet
     const ws = XLSX.utils.json_to_sheet(data);
-
-    // Create workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "CallLogs");
-
-    // Generate file and download
     const date = new Date().toISOString().split("T")[0];
     XLSX.writeFile(wb, `CallLogs_${date}.xlsx`);
   }, [filteredExecutions, dashboard.extra_charge_breakdown, getCTA, getName]);
-  const [text,setText]=useState('Call Log')
+
   return (
     <div
       className={`${
         isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-      } p-4 md:p-6 lg:p-9  md:ml-48`}
+      } p-4 md:p-6 lg:p-9 md:ml-48`}
     >
-      {/* <div className="flex flex-col md:flex-row justify-between">
-        <div className="flex items-center"></div>
-
-        <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0 space-y-4 md:space-y-0 md:space-x-4">
-          <button
-            className="flex items-center bg-gray-100 rounded-full sm:rounded-md p-2 text-lg font-semibold text-gray-600 absolute sm:static top-4 right-14 gap-2"
-            onClick={toggleNightMode}
-          >
-            {isNightMode ? (
-              <>
-                <h2 className="hidden sm:inline"> Light mode </h2>
-                <img src="./images/Light mode.png" alt="" className="" />
-              </>
-            ) : (
-              <>
-                <h2 className="hidden sm:inline">Night mode</h2>
-                <img
-                  src="./images/material-symbols-light_dark-mode-rounded.png"
-                  alt=""
-                  className=""
-                />
-              </>
-            )}
-          </button>
-
-          <div
-            ref={profileToggleRef}
-            className="w-9 h-9 sm:w-12 sm:h-12 mr-6 bg-[#BD695D] rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold cursor-pointer absolute sm:static top-0 -right-3 "
-            onClick={handleCancel}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={512}
-              height={512}
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="white"
-                fillRule="evenodd"
-                d="M256 42.667A213.333 213.333 0 0 1 469.334 256c0 117.821-95.513 213.334-213.334 213.334c-117.82 0-213.333-95.513-213.333-213.334C42.667 138.18 138.18 42.667 256 42.667m21.334 234.667h-42.667c-52.815 0-98.158 31.987-117.715 77.648c30.944 43.391 81.692 71.685 139.048 71.685s108.104-28.294 139.049-71.688c-19.557-45.658-64.9-77.645-117.715-77.645M256 106.667c-35.346 0-64 28.654-64 64s28.654 64 64 64s64-28.654 64-64s-28.653-64-64-64"
-              ></path>
-            </svg>
-          </div>
-
-        </div>
-      </div> */}
-      <Topbar text={text} ></Topbar>
+      <Topbar text={text}></Topbar>
 
       {showProfile && (
         <div ref={ProfileRef}>
           <ProfileSettings handleCancel={() => setShowProfile(false)} />
         </div>
       )}
-
-      {/* <div
-        className={`${isNightMode ? "bg-black text-white" : "bg-white text-gray-700"
-          } flex justify-between items-center rounded-lg shadow-sm p-4 text-2xl font-bold mt-10`}
-      >
-        Call Logs
-        <button
-          onClick={() => setShowForm(true)}
-          className="flex text-lg text-white bg-orange-500 rounded-md p-2 mr-4 font-medium"
-        >
-          <img src="./images/i.png" alt="" className="mr-2 ml-2 mt-1" />
-          Call Numbers
-        </button>
-      </div> */}
 
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[50]">
@@ -375,8 +296,8 @@ const CallLog = () => {
       {show && selectedExecution && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <CallDetails
-            handleShowDetails={() => handleShowDetails(null)} // Pass null to reset
-            execution={selectedExecution} // Pass the selected execution data
+            handleShowDetails={() => handleShowDetails(null)}
+            execution={selectedExecution}
           />
         </div>
       )}
@@ -391,7 +312,7 @@ const CallLog = () => {
           <div
             className={`${
               isNightMode ? "bg-gray-600 text-white" : "bg-white text-gray-700"
-            } mt-3 p-2 mb-3 border rounded-lg flex  `}
+            } mt-3 p-2 mb-3 border rounded-lg flex`}
           >
             <img src="./images/Frame.png" alt="" className="w-5 h-5 mt-1" />
             <input
@@ -407,10 +328,14 @@ const CallLog = () => {
         <div
           className={`${
             isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-          } flex p-2 gap-5 items-center text-lg font-medium `}
+          } flex p-2 gap-5 items-center text-lg font-medium`}
         >
           <button
-            className={`${ isNightMode ?"flex items-center border p-2 px-4 gap-3 rounded-lg" :'flex items-center border p-2 px-4 gap-3 bg-white rounded-lg'}`}
+            className={`${
+              isNightMode
+                ? "flex items-center border p-2 px-4 gap-3 rounded-lg"
+                : "flex items-center border p-2 px-4 gap-3 bg-white rounded-lg"
+            }`}
             onClick={exportToExcel}
           >
             <FaDownload />
@@ -452,7 +377,7 @@ const CallLog = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredExecutions.map((execution) => {
+              {paginatedExecutions.map((execution) => {
                 const cta = getCTA(execution);
                 const costItem = dashboard.extra_charge_breakdown?.find(
                   (item) => item.execution_id === execution.id
@@ -484,7 +409,7 @@ const CallLog = () => {
                     <td className="p-4">
                       {execution.telephony_data?.to_number}
                     </td>
-                    <td className="p-4">{execution.total_cost.toFixed(2)}</td>
+                    <td className="p-4">{cost}</td>
                     <td className="p-4">
                       {formatDuration(execution.conversation_duration)}
                     </td>
@@ -504,6 +429,28 @@ const CallLog = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Pagination Component */}
+      <div className="flex justify-center mt-4">
+        <Pagination 
+          count={pageCount} 
+          page={page} 
+          onChange={(e, value) => setPage(value)} 
+          color="primary"
+          sx={{
+            '& .MuiPaginationItem-root': {
+              color: isNightMode ? 'white' : 'black',
+            },
+            '& .Mui-selected': {
+              backgroundColor: '#BD695D',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#A13727',
+              }
+            },
+          }}
+        />
       </div>
     </div>
   );

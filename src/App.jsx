@@ -10,7 +10,6 @@ import Sidebar from "./components/Sidebar";
 
 import Tasks from "./pages/Tasks";
 import RechargePage from "./components/RechargePage";
-import Signup from "./components/Signup";
 import { NightModeProvider } from "./contexts/NightModeContext";
 import LoginPage from "./hooks/LoginPage";
 import PrivateRoute from "./hooks/PrivateRoute";
@@ -27,10 +26,9 @@ function Content({ showSidebar }) {
    
       <div className="w-full">
         <Routes>
-          <Route path="/signup" element={<Signup />} />
+{/* <Route path="/signup" element={<Signup />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<LoginPage />} />
-
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/call-logs" element={<CallLog />} />
@@ -60,7 +58,7 @@ const AppWrapper = () => {
 };
 function App() {
   return (
-    <Router basename="/maitri_assistant">
+    <Router >
       <NightModeProvider>
         <LoginProvider>
         {/* <GoogleTranslate/> */}

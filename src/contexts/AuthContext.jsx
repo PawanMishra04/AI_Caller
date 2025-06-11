@@ -40,7 +40,7 @@ const LoginProvider = ({ children}) => {
                 localStorage.removeItem('user');
                 localStorage.removeItem('token');
                 // Redirect the user
-                window.location.href = '/maitri_assistant/';
+                window.location.href = '/';
             }
         });
     };

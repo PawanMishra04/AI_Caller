@@ -176,9 +176,9 @@ const Campaigns = () => {
   const profileToggleRef = (null);
     const [showProfile, setShowProfile] = useState(false);
 
-  const handleCancel = () => {
-    setShowProfile(!showProfile); // Toggle profile visibility
-  };
+  // const handleCancel = () => {
+  //   setShowProfile(!showProfile); // Toggle profile visibility
+  // };
     const [text,setText]=useState('Campaigns')
 
   return (
