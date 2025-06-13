@@ -255,19 +255,17 @@ const Billing = () => {
             </p>
           </div>
 
-          <div
-            className={`${
-              isNightMode
-                ? "bg-customDarkGray text-white"
-                : "bg-white text-gray-700"
-            } rounded-xl shadow gap-6 p-4 mt-8`}
+           <div
+            className={`${isNightMode
+              ? "bg-customDarkGray text-white"
+              : "bg-white text-gray-700"
+              } rounded-xl shadow gap-6 p-4 mt-8`}
           >
             <div
-              className={`${
-                isNightMode
-                  ? "bg-customDarkGray text-white"
-                  : "bg-gray-50 text-gray-700"
-              } sm:flex p-4 rounded-2xl`}
+              className={`${isNightMode
+                ? "bg-customDarkGray text-white"
+                : "bg-gray-50 text-gray-700"
+                } sm:flex p-4 rounded-2xl`}
             >
               <div className="w-full space-y-2">
                 <h1 className="text-2xl font-bold">Development Cost</h1>
@@ -289,109 +287,96 @@ const Billing = () => {
                 options
               </h2>
             </div>
-
-            <div className="sm:flex justify-around w-full sm:p-6 p-6">
-              {plan.map((plan, index) => (
-                <div
-                  key={index}
-                  className={`w-80 p-6 rounded-xl my-5  shadow-xl bg-white text-center ${
-                    plan.is_recommended ? "border-blue-500 border-2" : ""
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-gray-800">
-                      {plan.name}
-                    </span>
-                    {plan.is_popular && (
-                      <span className="px-3 py-1 text-xs font-bold rounded-full bg-blue-200 text-blue-800">
-                        Popular
+            <div className="md:flex justify-around">
+              <div className="sm:flex justify-around md:p-6">
+                {plan.map((plan, index) => (
+                  <div
+                    key={index}
+                    className={`w-80 p-6 rounded-xl my-5  shadow-xl bg-white text-center ${plan.is_recommended ? "border-blue-500 border-2" : ""
+                      }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-gray-800">
+                        {plan.name}
                       </span>
-                    )}
+                      {plan.is_popular && (
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-blue-200 text-blue-800">
+                          Popular
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-4xl font-bold text-left text-gray-700 mt-3">
+                      ₹{plan.price}
+                      <span className="text-lg text-gray-500">/ month</span>
+                    </p>
+
+                    <ul className="mt-6 text-left space-y-3">
+                      <li className="text-gray-900 text-lg flex items-center gap-2">
+                        <img
+                          src="./images/Frame (2).png"
+                          alt="check icon"
+                          className="w-5 h-5"
+                        />
+                        Languages: {plan.languages}
+                      </li>
+                      <li className="text-gray-900 text-lg flex items-center gap-2">
+                        <img
+                          src="./images/Frame (2).png"
+                          alt="check icon"
+                          className="w-5 h-5"
+                        />
+                        Calling Seconds: {plan.calling_seconds}
+                      </li>
+                    </ul>
+
+                    <Link
+                      to={{
+                        pathname: "/recharge",
+                        state: { price: plan.price }, // Ensure this is correct
+                      }}
+                      onClick={() =>
+                        localStorage.setItem("rechargePrice", plan.price)
+                      }
+                    >
+                      <button className="mt-6 w-full bg-customPink text-white font-medium py-2 rounded-lg hover:bg-customDarkPink">
+                        {plan.is_recommended ? "Get Recommended" : "Get Started"}
+                      </button>
+                    </Link>
+
                   </div>
+                ))}
+              </div>
 
-                  <p className="text-4xl font-bold text-left text-gray-700 mt-3">
-                    ₹{plan.price}
-                    <span className="text-lg text-gray-500">/ month</span>
-                  </p>
-
-                  <ul className="mt-6 text-left space-y-3">
-                    <li className="text-gray-900 text-lg flex items-center gap-2">
-                      <img
-                        src="./images/Frame (2).png"
-                        alt="check icon"
-                        className="w-5 h-5"
-                      />
-                      Languages: {plan.languages}
+              <div className="flex items-center justify-center">
+                <div className="bg-white rounded-xl shadow-xl p-6 w-80">
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-2xl font-bold text-gray-800">Enterprise</h3>
+                    <span className="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+                      Custom
+                    </span>
+                  </div>
+                  <h2 className="text-2xl font-bold mt-3">Contact us</h2>
+                  <ul className="mt-4 space-y-3 text-gray-900 text-lg">
+                    <li className="flex items-start gap-2">
+                      <img src="./images/Frame (2).png" alt="check" className="h-5 w-5 mt-1" />
+                      For enterprise's that need volume based discounts and custom terms.
                     </li>
-                    <li className="text-gray-900 text-lg flex items-center gap-2">
-                      <img
-                        src="./images/Frame (2).png"
-                        alt="check icon"
-                        className="w-5 h-5"
-                      />
-                      Calling Seconds: {plan.calling_seconds}
+                    <li className="flex items-start gap-2">
+                      <img src="./images/Frame (2).png" alt="check" className="h-5 w-5 mt-1" />
+                      Custom Assistants
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <img src="./images/Frame (2).png" alt="check" className="h-5 w-5 mt-1" />
+                      Social media configuration
                     </li>
                   </ul>
-
-                  <Link
-                    to={{
-                      pathname: "/recharge",
-                      state: { price: plan.price }, // Ensure this is correct
-                    }}
-                    onClick={() =>
-                      localStorage.setItem("rechargePrice", plan.price)
-                    }
-                  >
-                    <button className="mt-6 w-full bg-[#BD695D] text-white font-medium py-2 rounded-lg hover:bg-[#A13727]">
-                      {plan.is_recommended ? "Get Recommended" : "Get Started"}
-                    </button>
-                  </Link>
+                  <button className="mt-6 w-full bg-customPink text-white font-medium py-2 rounded-lg hover:bg-customDarkPink">
+                    Let’s Talk
+                  </button>
                 </div>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-center">
-              <div className="bg-white rounded-xl shadow-xl p-6 w-80">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-2xl font-bold text-gray-800">
-                    Enterprise
-                  </h3>
-                  <span className="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
-                    Custom
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold mt-3">Contact us</h2>
-                <ul className="mt-4 space-y-3 text-gray-900 text-lg">
-                  <li className="flex items-start gap-2">
-                    <img
-                      src="./images/Frame (2).png"
-                      alt="check"
-                      className="h-5 w-5 mt-1"
-                    />
-                    For enterprise's that need volume based discounts and custom
-                    terms.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <img
-                      src="./images/Frame (2).png"
-                      alt="check"
-                      className="h-5 w-5 mt-1"
-                    />
-                    Custom Assistants
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <img
-                      src="./images/Frame (2).png"
-                      alt="check"
-                      className="h-5 w-5 mt-1"
-                    />
-                    Social media configuration
-                  </li>
-                </ul>
-                <button className="mt-6 w-full bg-[#BD695D] text-white font-medium py-2 rounded-lg hover:bg-[#A13727]">
-                  Let’s Talk
-                </button>
               </div>
+
             </div>
           </div>
         </>

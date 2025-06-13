@@ -49,13 +49,14 @@ const RechargePage = () => {
     };
 
     loadRazorpayScript();
-  }, []);
+  }, [orderDetails]);
 
+  useEffect(() => {
+     createOrder()
+  },[orderDetails, amount, receipt, user_id, token]);
   const createOrder = async () => {
     // console.log(amount);
     if (!user_id || !amount || !receipt) return;
-    
-
     try {
       const response = await axios.post(
         "/api/create_order/",
@@ -84,12 +85,16 @@ const RechargePage = () => {
   const handlePayment = async () => {
     if (!orderId) {
       const createdOrderId = await createOrder();
+      console.log("Created Order ID:", createdOrderId);
       if (!createdOrderId) return;
       setOrderId(createdOrderId);
-      return;
+      // return;
     }
 
-    if (!orderDetails) return;
+    // if (!orderDetails) return;
+
+    console.log("Order ID:", orderDetails.amount);
+
 
     const options = {
       key: "rzp_test_hqWvVqOn8QFGEF",
@@ -159,18 +164,18 @@ const RechargePage = () => {
         >
           <div className="mb-4">
             <h1 className="text-2xl font-semibold text-gray-700">
-              <div className="border-b mx-auto flex justify-center">
-                <img src="./images/MAITRIAILOGO4.png" alt="Logo" />
+              <div className="flex justify-center mx-auto border-b">
+                <img src="./images/LogoTagline.png" alt="Logo" className="h-36" />
               </div>
             </h1>
           </div>
           <div className="flex items-center justify-center mb-2">
-            <span className="text-green-600 text-lg">
+            <span className="text-lg text-green-600">
               <RiSecurePaymentLine />
             </span>
-            <h2 className="text-gray-700 font-medium ml-2">Secure Checkout</h2>
+            <h2 className="ml-2 font-medium text-gray-700">Secure Checkout</h2>
           </div>
-          <p className="text-gray-500 text-sm mb-4">
+          <p className="mb-4 text-sm text-gray-500">
             Your payment is protected by bank-level security
           </p>
           <form
@@ -208,13 +213,13 @@ const RechargePage = () => {
 
         <button
           onClick={handlePayment}
-          className="w-full bg-pink-500 text-white font-semibold py-2 mt-4 rounded-lg shadow-md hover:bg-pink-600 transition duration-300"
+          className="w-full py-2 mt-4 font-semibold text-white transition duration-300  rounded-lg shadow-md  bg-[#BD695D] hover:bg-[#A13727]"
         >
           Pay Now
         </button>
       </form>
 
-      <div className="mt-4 flex justify-center items-center text-gray-500 text-sm">
+      <div className="flex items-center justify-center mt-4 text-sm text-gray-500">
         <span className="mr-2">Secured by</span>
         <div className="flex justify-around gap-2">
           <FaCcVisa size={25} />

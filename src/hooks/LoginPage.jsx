@@ -15,22 +15,12 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const CheckLoader=()=>{
-     if(loginData.email.length === 0 && loginData.user_password.length=== 0)return;
-     
-    
-     setIsLogin(true);
-     
-
-
-     
-  }
 
   const loginUser = async (e) => {
     e.preventDefault();
-     if (!loginData.email || !loginData.user_password) {
-    return;
-  }
+    if (!loginData.email || !loginData.user_password) {
+      return;
+    }
     setIsLogin(true);
 
     try {
@@ -43,39 +33,54 @@ const LoginPage = () => {
       const { token: newToken } = response.data;
 
       if (!newToken) {
-        throw new Error("Token missing. Login failed.");
+        // throw new Error("Token missing. Login failed.");
+         Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      text: "Invalid email or password",
+    });
+    return;
       }
 
       localStorage.setItem("user", JSON.stringify(user_data));
       localStorage.setItem("token", newToken);
       dispatch({ type: "LOGIN", payload: { token: newToken } });
-
-      navigate("/dashboard");
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Logged in successfully",
-      });
-    } catch (e) {
-      console.log(e);
+      if (response) {
+        navigate("/dashboard");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Logged in successfully",
+        });
+      }
+    } catch (error) {
+      console.log(error)
+      console.log(error.response?.data?.detail);
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Login Failed",
+      //   text: `${error.response}` || "Server error",
+      // });
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: `${e.response}`,
+        text:
+          error.response?.data?.detail ||
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.",
       });
-    }
-    finally{
-       setIsLogin(false); 
+    } finally {
+      setIsLogin(false);
     }
   };
 
@@ -88,14 +93,14 @@ const LoginPage = () => {
 
   return (
     <div className="bg-[url('/bg-logo.jpg')] bg-cover bg-center bg-no-repeat  flex justify-center items-center min-h-screen ">
-      <div className="flex shadow-lg rounded-lg md:max-w-[95%] bg-gray-200 flex-col md:flex-row md:items-center md:justify-center md:p-12 p-4 gap-6 lg:max-w-[80%] lg:max-h-[80%]">
+      <div className="flex shadow-lg rounded-lg md:max-w-[95%]  flex-col md:flex-row md:items-center md:justify-center md:p-12 p-4 gap-6 lg:max-w-[80%] lg:max-h-[80%]">
         <img
           className=" max-h-64 h-auto sm:max-h-96 md:max-h-[450px] lg:max-h-[600px] md:w-[50%] lg:w-[50%]"
           src="./images/SignIn.png"
           alt="Login"
         />
 
-        <div className="shadow-lg flex- rounded-xl px-6 py-4 md:px-10 md:w-[800px] bg-gray-100">
+        <div className="shadow-lg flex- rounded-xl px-6 py-4 md:px-10 md:w-[800px] bg-gray-200">
           <div className="">
             <img
               className="m-auto w-36 md:w-40"
@@ -106,7 +111,7 @@ const LoginPage = () => {
           <div className="flex flex-col items-center gap-2 mt-4">
             <h1 className="text-3xl md:text-4xl font-semibold">Sign In</h1>
             <p className="text-gray-600 text-sm md:text-base text-center">
-              Welcome back! Please enter your details
+              Welcome! Please enter your details
             </p>
           </div>
           <form onSubmit={loginUser} className="mt-8 flex flex-col gap-4">
@@ -148,7 +153,6 @@ const LoginPage = () => {
             <button
               type="submit"
               className="bg-[#BD695D] hover:bg-[#A13727] text-center py-3 rounded-xl mt-4 text-white font-semibold"
-              onClick={CheckLoader}
             >
               {isLogin ? (
                 <div className="flex justify-center">

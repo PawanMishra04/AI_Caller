@@ -23,7 +23,6 @@ const Campaigns = () => {
   const { isNightMode, toggleNightMode } = useNightMode();
 
   const DeleteBatch = async (id) => {
-
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "This action cannot be undone!",
@@ -48,8 +47,6 @@ const Campaigns = () => {
             title: "data is deleted",
           });
           window.location.reload();
-
-
         }
       } catch (e) {
         Swal.fire({
@@ -58,7 +55,6 @@ const Campaigns = () => {
         });
       }
     }
-
   };
   const handleSchedule = () => {
     if (!batchId) {
@@ -128,20 +124,16 @@ const Campaigns = () => {
   };
 
   const handleFileChange = (e) => {
-
-
     const file = e.target.files[0];
     if (file && file.type === "text/csv") {
       setFileData(file);
     } else {
-
       Swal.fire({
-        icon: 'warning',
+        icon: "warning",
         title: "Please Upload .CSV file",
       });
       e.target.value = "";
     }
-
   };
 
   const BatchCreate = async () => {
@@ -149,19 +141,23 @@ const Campaigns = () => {
       const formData = new FormData();
       formData.append("file", fileData);
 
-      await axios.post("/api/batch_create/", formData, {
+      const response = await axios.post("/api/batch_create/", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      Swal.fire({
-        icon: "success",
-        title: "File Uploaded Successfully",
-      });
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          title: "File Uploaded Successfully",
+        });
+      }
+
       setShowForm(false);
       getBatch(); // Refresh batch list after upload
     } catch (e) {
+      console.log(e);
       Swal.fire({
         icon: "error",
         title: `${e.response?.data?.message || "Upload failed"}`,
@@ -172,25 +168,27 @@ const Campaigns = () => {
   useEffect(() => {
     getBatch();
   }, []);
-  const ProfileRef = (null);
-  const profileToggleRef = (null);
-    const [showProfile, setShowProfile] = useState(false);
+  const ProfileRef = null;
+  const profileToggleRef = null;
+  const [showProfile, setShowProfile] = useState(false);
 
   // const handleCancel = () => {
   //   setShowProfile(!showProfile); // Toggle profile visibility
   // };
-    const [text,setText]=useState('Campaigns')
+  const [text, setText] = useState("Campaigns");
 
   return (
     <div
-      className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-        } p-4 md:p-6 lg:p-9 h-screen md:ml-48`}
+      className={`${
+        isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
+      } p-4 md:p-6 lg:p-9 h-screen md:ml-48`}
     >
-<Topbar text={text}></Topbar>
+      <Topbar text={text}></Topbar>
 
       <div
-        className={`${isNightMode ? "bg-black text-white" : " bg-transparent"
-          } flex justify-start  p-4 mt-10 rounded-lg `}
+        className={`${
+          isNightMode ? "bg-black text-white" : " bg-transparent"
+        } flex justify-start  p-4 mt-10 rounded-lg `}
       >
         <button
           onClick={() => setShowForm(true)}
@@ -200,15 +198,14 @@ const Campaigns = () => {
         </button>
       </div>
 
-      
-
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[9999]">
           <div
-            className={`${isNightMode
+            className={`${
+              isNightMode
                 ? "bg-customDarkGray text-white"
                 : "bg-gray-50 text-gray-700"
-              } border w-[90%] sm:w-[30%] py-8 shadow-lg rounded-xl p-6 mt-6`}
+            } border w-[90%] sm:w-[30%] py-8 shadow-lg rounded-xl p-6 mt-6`}
           >
             <h2 className="text-2xl flex justify-between font-bold mb-7">
               Create New Campaign
@@ -252,8 +249,10 @@ const Campaigns = () => {
           <Loader />
         </div>
       )}
-       {showProfile && (
-        <div ref={ProfileRef}><ProfileSettings handleCancel={() => setShowProfile(false)} /></div>
+      {showProfile && (
+        <div ref={ProfileRef}>
+          <ProfileSettings handleCancel={() => setShowProfile(false)} />
+        </div>
       )}
       {showCalendar && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-70 z-[1000]">
@@ -288,10 +287,11 @@ const Campaigns = () => {
         <table className="min-w-full rounded-lg border">
           <thead>
             <tr
-              className={`${isNightMode
+              className={`${
+                isNightMode
                   ? "bg-gray-800 text-white"
                   : "bg-gray-100 text-gray-700"
-                } text-left border-b`}
+              } text-left border-b`}
             >
               <th className="p-3">Campaign Name</th>
               <th className="p-3">Caller</th>
@@ -304,10 +304,11 @@ const Campaigns = () => {
             {BatchData.map((batch) => (
               <tr
                 key={batch.batch_id}
-                className={`${isNightMode
+                className={`${
+                  isNightMode
                     ? "bg-gray-600 text-white"
                     : "bg-white text-gray-700"
-                  } h-14`}
+                } h-14`}
               >
                 <td className="p-3">{batch.file_name}</td>
                 <td className="p-3">{batch.from_phone_number}</td>
