@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* .my-custom-icon-size-sm.swal2-icon {
+  width: 2.5em !important;
+  height: 2.5em !important;
+  font-size: 1.2em !important;
+} */
+
+.my-custom-icon{
+    font-size: 10px;
+    /* width: 10px; */
+    /* height: 54px; */
+    
+}
+
+.my-custom-title{
+  font-size: 1.4em ;
+  margin: auto;
+}
+
+.my-custom-logouttitle{
+  font-size: 1.7em;
+}
+.my-custom-logouticon{
+   font-size: 12px;
+}
+
+.my-custom-campaigntitle{
+  font-size: 1.7em;
+}
+.my-custom-campaignicon{
+   font-size: 12px;
+}

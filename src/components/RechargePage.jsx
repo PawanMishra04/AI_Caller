@@ -49,7 +49,11 @@ const RechargePage = () => {
     };
 
     loadRazorpayScript();
-  }, []);
+  }, [orderDetails]);
+
+  useEffect(() => {
+     createOrder()
+  },[orderDetails, amount, receipt, user_id, token]);
 
   const createOrder = async () => {
     // console.log(amount);

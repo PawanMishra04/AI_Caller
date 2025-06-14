@@ -31,12 +31,22 @@ const UpdatePassword = ({ handleCancel }) => {
         Swal.fire({
           title: 'Password Updated Successfully',
           icon: 'success',
+          customClass: {
+            icon: 'my-custom-icon',
+            
+          }
         });
+        handleCancel();
       }
+      
     } catch (e) {
       Swal.fire({
         title: `${e.response.data.detail}`,
         icon: 'error',
+        customClass: {
+          icon: 'my-custom-icon',
+          title: 'my-custom-title'
+        }
       });
     }
   };
@@ -77,9 +87,9 @@ const UpdatePassword = ({ handleCancel }) => {
                 className="absolute inset-y-0 right-2 flex items-center"
               >
                 {showNewPassword ? (
-                  <PiEyeSlash className="h-5 w-5 text-gray-500" />
+                  <PiEyeLight className="h-5 w-5 text-gray-500" />
                 ) : (
-                  <PiEyeLight  className="h-5 w-5 text-gray-500" />
+                  <PiEyeSlash  className="h-5 w-5 text-gray-500" />
                 )}
               </button>
             </div>
@@ -103,9 +113,9 @@ const UpdatePassword = ({ handleCancel }) => {
                 className="absolute inset-y-0 right-2 flex items-center"
               >
                 {showConfirmPassword ? (
-                  <PiEyeSlash className="h-5 w-5 text-gray-500" />
-                ) : (
                   <PiEyeLight className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <PiEyeSlash className="h-5 w-5 text-gray-500" />
                 )}
               </button>
             </div>
@@ -115,6 +125,7 @@ const UpdatePassword = ({ handleCancel }) => {
           <button
             type="submit"
             className={`w-full py-2 px-4 rounded-lg transition duration-200 ${isNightMode ? "bg-blue-600 hover:bg-blue-500" : "bg-pink-500 hover:bg-pink-600"} text-white`}
+            
           >
             Save
           </button>

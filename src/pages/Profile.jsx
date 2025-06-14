@@ -101,7 +101,7 @@ const ProfileSettings = ({ handleCancel }) => {
               className={`w-full py-2 px-4 m-2 rounded-lg transition duration-200 ${
                 isNightMode
                   ? "bg-blue-600 hover:bg-blue-500"
-                  : "bg-pink-500 hover:bg-blue-600"
+                  : "bg-pink-500 hover:bg-pink-600"
               } text-white`}
             >
               Update Password

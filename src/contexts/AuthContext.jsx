@@ -1,4 +1,4 @@
-import{ createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useContext } from 'react';
 import Swal from 'sweetalert2';
 
 
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 const initialState = {
     user: null,
     token: null,
-    logout: () => {} 
+    logout: () => { }
 };
 
 const LoginContext = createContext(initialState);
@@ -22,7 +22,7 @@ const loginReducer = (state, action) => {
     }
 };
 
-const LoginProvider = ({ children}) => {
+const LoginProvider = ({ children }) => {
     const [state, dispatch] = useReducer(loginReducer, { user: null, token: null });
 
     const logout = () => {
@@ -33,6 +33,10 @@ const LoginProvider = ({ children}) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, log out',
+            customClass: {
+                icon: 'my-custom-logouticon',
+                title: 'my-custom-logouttitle'
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch({ type: 'LOGOUT' });

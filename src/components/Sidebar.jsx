@@ -63,11 +63,11 @@ const Sidebar = () => {
 
       <div
         className={`fixed top-0 left-0 h-screen w-full shadow-xl  transition-transform duration-300 z-40  ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 md:fixed md:left-0 md:top-0 md:h-screen md:w-80 ${isNightMode ? "bg-gray-950 text-white" : "bg-white text-gray-700"
+          } md:translate-x-0 md:fixed md:left-0 md:top-0 md:h-screen md:w-72 ${isNightMode ? "bg-gray-950 text-white" : "bg-white text-gray-700"
           } flex flex-col `}
       >
         {/* Logo Section */}
-        <div className="border-b-2 p-5 ">
+        <div className="border-b-2 p-5">
           <div className="flex p-4 justify-center items-center">
             <img src="./images/MAITRIAILOGO4.png" alt="logo" className="" />
           </div>
@@ -107,20 +107,20 @@ const Sidebar = () => {
         </div>
 
         <div className="mt-auto mb-6 px-4">
-        <button
-          className={`flex items-center text-2xl gap-2 px-4 py-3 w-full text-red-600 rounded-lg transition-all duration-300
+          <button
+            className={`flex items-center text-2xl gap-2 px-4 py-3 w-full text-red-600 rounded-lg transition-all duration-300
                         ${active === "Logout"
-              ? "bg-blue-100 text-pink-500"
-              : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-red-500 after:transition-all after:duration-300 hover:after:w-full"
-            }
+                ? "bg-blue-100 text-pink-500"
+                : " relative pb-3 after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-red-500 after:transition-all after:duration-300 hover:after:w-full"
+              }
                     `}
-          onClick={handleLogout}
-        >
-        <MdLogout />
-        Logout
-        </button>
+            onClick={handleLogout}
+          >
+            <MdLogout />
+            Logout
+          </button>
         </div>
-        
+
       </div>
 
     </div>

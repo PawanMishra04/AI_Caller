@@ -491,6 +491,7 @@ import axios from "../helper/axios";
 import Loader from "../components/Loader";
 import ProfileSettings from "./Profile";
 import Swal from "sweetalert2";
+import Topbar from "./Topbar";
 
 const Dashboard = () => {
   const [dashboard, setDashboard] = useState([]);
@@ -500,7 +501,9 @@ const Dashboard = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [load, setLoad] = useState(true);
   const { isNightMode, toggleNightMode } = useNightMode();
+  const [text, setText] = useState('Dashboard Overview');
   const token = localStorage.getItem("token");
+  const [desc,setDesc]=useState('Monitor your AI calling performance');
   const navigate = useNavigate();
 
   const profileRef = useRef(null);
@@ -588,8 +591,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"} p-3 md:p-6 sm:mr-0 lg:p-9 md:ml-64`}>
-      <div className="flex flex-col md:flex-row justify-between">
+    <div className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"} p-3 md:p-6 sm:mr-0 lg:p-9 md:ml-56 w-full lg:w-auto`}>
+
+      <Topbar text={text} desc={desc}></Topbar>
+      {/* <div className="flex flex-col md:flex-row justify-between">
         <div className="flex items-center">
           <img
             src="./images/MAITRIAILOGO4.png"
@@ -655,7 +660,7 @@ const Dashboard = () => {
             </svg>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {showProfile && (
         <div ref={profileRef}>
@@ -674,16 +679,18 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {load && (
+      {/* {load && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-30">
           <Loader />
         </div>
-      )}
+      )} */}
 
       <div className="w-full mt-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard isNightMode={isNightMode} title="Total Calls" value={dashboard.total_calls} image="./images/div.png" />
         <DashboardCard isNightMode={isNightMode} title="Successful Calls" value={dashboard.successful_calls} image="./images/div (1).png" />
-        <DashboardCard isNightMode={isNightMode} title="Avg. Call Duration" value={`${dashboard.total_duration_minutes} Min`} image="./images/div (2).png" />
+        <DashboardCard isNightMode={isNightMode} title="Avg. Call Duration" value={`${
+          dashboard.total_duration_minutes|| 0} Min`
+          } image="./images/div (2).png" />
         <DashboardCard isNightMode={isNightMode} title="Total Cost" value={dashboard.total_call_cost_with_extra_charge} image="./images/div (3).png" />
       </div>
 

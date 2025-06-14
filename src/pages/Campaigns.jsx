@@ -6,6 +6,8 @@ import { MdDelete } from "react-icons/md";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Loader from "../components/Loader";
+import Topbar from "./Topbar";
+
 const Campaigns = () => {
   const [showForm, setShowForm] = useState(false);
   const { isNightMode } = useNightMode();
@@ -18,6 +20,9 @@ const Campaigns = () => {
   const [batchId, setBatchId] = useState("");
   const token = localStorage.getItem("token");
   const [load, setLoad] = useState(true);
+  const [text, setText] = useState('Campaigns');
+  // const [desc,setDesc]=useState('Monitor your AI calling performance');
+
 
   const DeleteBatch = async (id) => {
 
@@ -52,6 +57,10 @@ const Campaigns = () => {
         Swal.fire({
           icon: "error",
           title: `${e}`,
+          customClass: {
+            icon: 'my-custom-logouticon',
+            title: 'my-custom-logouttitle'
+          }
         });
       }
     }
@@ -162,6 +171,11 @@ const Campaigns = () => {
       Swal.fire({
         icon: "error",
         title: `${e.response?.data?.message || "Upload failed"}`,
+        customClass: {
+          icon: 'my-custom-campaignicon',
+          title: 'my-custom-campaigntitle',
+          popup: 'z-[9999]'
+        }
       });
     }
   };
@@ -173,26 +187,10 @@ const Campaigns = () => {
   return (
     <div
       className={`${isNightMode ? "bg-black text-white" : "bg-gray-50 text-gray-700"
-        } p-4 md:p-6 lg:p-9 h-screen md:ml-64`}
+        } p-4 md:p-6 lg:p-9 h-screen md:ml-56 w-full lg:w-auto`}
     >
-      <div className="flex flex-col md:flex-row justify-between">
-        {/* Show logo on mobile and text on larger screens */}
-        <div className="flex items-center">
-          <img
-            src="./images/MAITRIAILOGO4.png" 
-            alt="Company Logo"
-            className="w-40 sm:hidden -mt-1 ml-10" 
-          />
-          {/* Dashboard text - hidden on mobile */}
-          <div className="hidden sm:block font-bold text-2xl md:text-3xl">
-            Dashboard Overview
-            <p className="text-lg md:text-xl font-semibold text-gray-400">
-              Monitor your AI calling performance
-            </p>
-          </div>
-        </div>
-      </div>
-
+      {/*  */}
+      <Topbar text={text}></Topbar>
       <div
         className={`${isNightMode ? "bg-black text-white" : "bg-white text-gray-700"
           } flex justify-between shadow p-4 mt-10 rounded-lg `}
@@ -207,11 +205,11 @@ const Campaigns = () => {
       </div>
 
       {showForm && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[9999]">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-[50]">
           <div
             className={`${isNightMode
-                ? "bg-customDarkGray text-white"
-                : "bg-gray-50 text-gray-700"
+              ? "bg-customDarkGray text-white"
+              : "bg-gray-50 text-gray-700"
               } border w-[90%] sm:w-[30%] py-8 shadow-lg rounded-xl p-6 mt-6`}
           >
             <h2 className="text-2xl flex justify-between font-bold mb-7">
@@ -290,8 +288,8 @@ const Campaigns = () => {
           <thead>
             <tr
               className={`${isNightMode
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-100 text-gray-700"
+                ? "bg-gray-800 text-white"
+                : "bg-gray-100 text-gray-700"
                 } text-left border-b`}
             >
               <th className="p-3">Campaign Name</th>
@@ -306,8 +304,8 @@ const Campaigns = () => {
               <tr
                 key={batch.batch_id}
                 className={`${isNightMode
-                    ? "bg-gray-600 text-white"
-                    : "bg-white text-gray-700"
+                  ? "bg-gray-600 text-white"
+                  : "bg-white text-gray-700"
                   } h-14`}
               >
                 <td className="p-3">{batch.file_name}</td>
